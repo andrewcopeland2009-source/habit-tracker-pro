@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: 251 247 240;
+  --card: 255 253 249;
+  --sunk: 245 239 230;
+  --line: 233 224 211;
+  --ink: 61 52 47;
+  --muted: 128 115 106;
+  --faint: 176 164 153;
+  --blush: 248 205 211;
+  --peach: 250 213 188;
+  --powder: 196 222 244;
+  --lavender: 216 204 239;
+  --sage: 204 225 197;
+  --butter: 250 233 168;
+  --coral: 244 168 152;
+  --accent: 214 128 140;
+  --shadow: 110 84 66;
+  --grid: 120 96 80;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nav-h: 64px;
+}
+
+.dark {
+  --paper: 26 23 22;
+  --card: 36 32 30;
+  --sunk: 30 27 25;
+  --line: 58 52 48;
+  --ink: 238 230 222;
+  --muted: 170 158 148;
+  --faint: 118 108 100;
+  --blush: 150 98 108;
+  --peach: 170 118 84;
+  --powder: 98 122 150;
+  --lavender: 118 102 150;
+  --sage: 104 132 98;
+  --butter: 168 146 80;
+  --coral: 168 102 90;
+  --accent: 214 146 156;
+  --shadow: 0 0 0;
+  --grid: 255 240 230;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background: rgb(var(--paper));
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+  body {
+    @apply font-sans text-ink antialiased;
+    overflow-x: hidden;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  button,
+  [role='button'] {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: rgb(var(--blush) / 0.6);
+  }
+}
+
+@layer components {
+  .paper-grid {
+    background-image: linear-gradient(rgb(var(--grid) / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid) / 0.045) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  .panel {
+    @apply rounded-2xl border border-line/80 bg-card shadow-soft;
+  }
+  .label-xs {
+    @apply text-[10px] font-semibold uppercase tracking-[0.14em] text-muted;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-paper/60 px-3.5 py-2.5 text-[15px] text-ink placeholder:text-faint
+      transition focus:border-accent/60 focus:bg-card focus:outline-none focus:ring-2 focus:ring-accent/20;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold transition active:scale-[0.97] disabled:opacity-40 disabled:active:scale-100;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-paper shadow-soft hover:opacity-90;
+  }
+  .btn-soft {
+    @apply btn border border-line bg-card text-ink hover:bg-sunk;
+  }
+  .btn-ghost {
+    @apply btn text-muted hover:bg-sunk hover:text-ink;
+  }
+  .btn-danger {
+    @apply btn bg-coral/80 text-ink hover:bg-coral;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium;
+  }
+  .divider-dots {
+    background-image: radial-gradient(rgb(var(--line)) 1px, transparent 1.2px);
+    background-size: 6px 2px;
+    background-repeat: repeat-x;
+    height: 2px;
+  }
+}
+
+@layer utilities {
+  .pt-safe {
+    padding-top: var(--safe-top);
+  }
+  .pb-safe {
+    padding-bottom: var(--safe-bottom);
+  }
+  .pb-nav {
+    padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 20px);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Recharts polish */
+.recharts-cartesian-axis-tick-value {
+  fill: rgb(var(--muted));
+  font-size: 10px;
+}
+.recharts-tooltip-cursor {
+  fill: rgb(var(--sunk));
+}
+.recharts-surface:focus,
+.recharts-wrapper:focus,
+.recharts-sector:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
